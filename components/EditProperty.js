@@ -19,24 +19,19 @@ import Header from './Header';
 
 export default class EditPreperty extends Component {
   state = {
-    text: ''
+    text: this.props.navigation.state.params.pair.defaultValue
   }
   componentDidMount() {
     //this.loadProjects();
     //this.showImagePicker();
   }
   render() {
-    const properties = {
-      Project: 'My favorite project',
-      Institution: 'Harry Ransom Center',
-      Collection: '',
-      Box: ''
-    };
+    const { params } = this.props.navigation.state;
     return (
       <View style={styles.container}>
         <Header title='Scholar Tags' canGoback navigation={this.props.navigation}/>
         <View style={styles.card}>
-          <Text style={styles.cardKey}>Box</Text>
+          <Text style={styles.cardKey}>{params.pair.prop}</Text>
           <View style={{
             //backgroundColor: this.state.text,
             borderColor: '#000000',

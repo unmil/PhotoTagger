@@ -15,7 +15,7 @@ import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
 import RNFS from 'react-native-fs';
 import { YellowBox } from 'react-native'
 //YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated']);
-import { queryCars } from '../databases/schemas';
+import { queryTags } from '../databases/schemas';
 import Header from './Header';
 
 export default class ScholarTags extends Component {
@@ -31,20 +31,23 @@ export default class ScholarTags extends Component {
       ['Collection', ''],
       ['Box', '']
     ];
+    const tag = this.props.navigation.state.params.tag;
     return (
       <View style={styles.container}>
-        <Header title='Scholar Tags' canGoback navigation={this.props.navigation}/>
+        <Header title={tag.displayName} canGoback navigation={this.props.navigation}/>
         {/* tags section */}
         <FlatList
-          data={properties}
+          data={tag.props}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) =>
             <TouchableOpacity
               style={styles.card}
-              onPress={() => this.props.navigation.navigate('EditProperty')}
+              onPress={() => this.props.navigation.navigate('EditProperty', {
+                pair: item
+              })}
             >
-              <Text style={styles.cardKey}>{item[0]}</Text>
-              <Text style={styles.cardValue}>{item[1]}</Text>
+              <Text style={styles.cardKey}>{item.prop}</Text>
+              <Text style={styles.cardValue}>{item.defaultValue}</Text>
             </TouchableOpacity>}
         />
         <TouchableOpacity

@@ -1,0 +1,49 @@
+{
+	"about": {
+		"version": "0.1",
+		"date": "2018-07-14",
+		"displayName": "Global Tags",
+		"id": "globalTags-v0.1",
+		"information": "These tags are are added to the chosen tag set (schema) and thus, are shared by all the schemas."
+	},
+	"properties": [
+	{
+	    "dbProperty": "title",
+	    "displayName": "Title",
+	    "display": "true",
+	    "dataType": "String",
+	    "values": []
+	},
+	{
+	    "dbProperty": "description",
+	    "displayName": "Description",
+	    "display": "true",
+	    "dataType": "String",
+	    "values": []
+	},
+	{
+	    "dbProperty": "timestamp",
+	    "displayName": "Date and time",
+	    "display": "false",
+	    "dataType": "datetime"
+	},
+	{
+	    "dbProperty": "latitude",
+	    "displayName": "Latitude",
+	    "display": "false",
+	    "dataType": "String"
+	},
+	{
+	    "dbProperty": "longitude",
+	    "displayName": "Longitude",
+	    "display": "false",
+	    "dataType": "String"
+	},
+	{
+	    "dbProperty": "tags",
+	    "displayName": "Tags",
+	    "display": "true",
+	    "dataType": "StringArray"
+	}
+	]
+}

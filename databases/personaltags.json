@@ -1,0 +1,46 @@
+{
+	"about": {
+		"version": "0.1",
+		"date": "2018-07-14",
+		"displayName": "Personal Tags",
+		"id": "personalTags-v0.1",
+		"information": "These tags are suitable for personal and family photographs"
+	},
+	"properties": [
+	{
+	    "dbProperty": "people",
+	    "displayName": "People",
+	    "display": "true",
+	    "dataType": "StringArray",
+	    "values": []
+	},
+	{
+	    "dbProperty": "place",
+	    "displayName": "Place",
+	    "display": "true",
+	    "dataType": "String",
+	    "values": []
+	},
+	{
+	    "dbProperty": "event",
+	    "displayName": "Event",
+	    "display": "true",
+	    "dataType": "String",
+	    "values": []
+	},
+	{
+	    "dbProperty": "trip",
+	    "displayName": "Trip",
+	    "display": "true",
+	    "dataType": "String",
+	    "values": []
+	},
+	{
+	    "dbProperty": "season",
+	    "displayName": "Season",
+	    "display": "true",
+	    "dataType": "String",
+	    "values": []
+	}
+	]
+}

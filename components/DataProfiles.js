@@ -13,49 +13,55 @@ import {
 import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
 import { YellowBox } from 'react-native'
 //YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated']);
-import { queryCars } from '../databases/schemas';
+import { queryTags } from '../databases/schemas';
 import Header from './Header';
 import RadioButton from './RadioButton';
 
 export default class DataProfiles extends Component {
-
+  state = {
+    selected: 'Scholar Tags',
+    tags: []
+  }
   componentDidMount() {
-    //this.loadProjects();
-    //this.showImagePicker();
+    queryTags().then(tags => {
+      this.setState({
+        tags: tags
+      });
+    })
   }
   render() {
+    const tags = [];
+    for (let tag of this.state.tags) {
+      if (tag.displayName === 'Global Tags') {
+        break;
+      }
+      tags.push(
+        <View key={tags.id}>
+          <View style={styles.tagRow}>
+            <TouchableOpacity
+              style={styles.radioButton}
+              onPress={() => this.setState({selected: tag.displayName})}
+            >
+              <RadioButton selected={this.state.selected === tag.displayName}/>
+              <Text style={styles.radioButtonText}>{tag.displayName}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.editBtn}
+              onPress={() => this.props.navigation.navigate('ScholarTags', {tag: tag})}
+            >
+              <Text style={{color: '#FFF'}}>EDIT</Text>
+            </TouchableOpacity>
+          </View>
+          <Text style={{fontSize: 12, color: '#7A7A7B', paddingHorizontal: 20}}>{tag.information}</Text>
+        </View>
+
+      );
+    }
     return (
       <View style={styles.container}>
         <Header title='Data Profiles' canGoback navigation={this.props.navigation}/>
         {/* tags section */}
-        <View style={styles.tagRow}>
-          <TouchableOpacity
-            style={{marginHorizontal: 20}}
-            onPress={() => this.props.navigation.navigate('ScholarTags')}
-          >
-            <Image
-              style={styles.infoIcon}
-              source={require('../images/blue-info-icon.png')}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.radioButton}>
-            <Text style={styles.radioButtonText}>Scholar Tags</Text>
-            <RadioButton selected/>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.tagRow}>
-          <TouchableOpacity style={{marginHorizontal: 20}}>
-            <Image
-              style={styles.infoIcon}
-              source={require('../images/blue-info-icon.png')}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.radioButton}>
-            <Text style={styles.radioButtonText}>Personal Tags</Text>
-            <RadioButton />
-          </TouchableOpacity>
-        </View>
+        {tags}
       </View>
     );
   }
@@ -89,15 +95,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 30
   },
-  infoIcon: {
-    height: 30,
-    width:30,
+  editBtn: {
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    backgroundColor: 'green',
+    marginHorizontal: 20
   },
   radioButtonText: {
     fontSize: 18,
-    marginRight:30
+    marginRight:30,
+    marginLeft: 10
   },
   radioButton: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginLeft: 20
   }
 });

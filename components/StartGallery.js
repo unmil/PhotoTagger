@@ -21,7 +21,7 @@ import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
 import RNFS from 'react-native-fs';
 import { YellowBox } from 'react-native'
 //YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated']);
-import { queryCars } from '../databases/schemas';
+import { queryCars, openDB } from '../databases/schemas';
 import Header from './Header';
 export default class StartGallery extends Component {
   state ={
@@ -75,7 +75,7 @@ export default class StartGallery extends Component {
   }
   componentDidMount() {
     //this.loadProjects();
-    //this.showImagePicker();
+    openDB();
   }
   render() {
     var images = ['1155F9B1-1ADF-41AD-A31C-2611B5BC782A.jpg'];

@@ -1,0 +1,65 @@
+{
+	"about": {
+		"version": "0.1",
+		"date": "2018-07-14",
+		"displayName": "Scholar Tags",
+		"id": "scholarTags-v0.1",
+		"information": "These tags are suitable for research-related photographs, especially those of archive materials."
+	},
+	"properties": [
+	{
+	    "dbProperty": "project",
+	    "displayName": "Project",
+	    "display": "true",
+	    "dataType": "String",
+	    "values": []
+	},
+	{
+	    "dbProperty": "institution",
+	    "displayName": "Institution",
+	    "display": "true",
+	    "dataType": "String",
+	    "values": []
+	},
+	{
+	    "dbProperty": "collection",
+	    "displayName": "Collection",
+	    "display": "true",
+	    "dataType": "String",
+	    "values": []
+	},
+	{
+	    "dbProperty": "folder",
+	    "displayName": "Folder",
+	    "display": "true",
+	    "dataType": "String",
+	    "values": []
+	},
+	{
+	    "dbProperty": "box",
+	    "displayName": "Box",
+	    "display": "true",
+	    "dataType": "String",
+	    "values": []
+	},
+	{
+	    "dbProperty": "groupId",
+	    "displayName": "Group",
+	    "dataType": "String",
+	    "display": "false"
+	},
+	{
+	    "dbProperty": "groupType",
+	    "displayName": "Group type",
+	    "valueOptions": ["list","hierarchy","bag"],
+	    "display": "false",
+	    "dataType": "choice"
+	},
+	{
+	    "dbProperty": "groupValue",
+	    "displayName": "Group value",
+	    "display": "false",
+	    "dataType": "String"
+	}
+	]
+}
