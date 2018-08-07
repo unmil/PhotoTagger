@@ -41,13 +41,12 @@ const TagProp = {
   properties: {
     prop: 'string',
     defaultValue: {type: 'string', default: ''},
-    tags: {type: 'linkingObjects', objectType: 'Tag', property: 'props'}
+    tagId: 'string'
   }
 }
 
 const Image = {
   name: 'Image',
-  primaryKey: 'id',
   properties: {
     id: 'string',
     prop: 'string',
@@ -58,16 +57,15 @@ const Image = {
 export var realm = null;
 
 export async function openDB() {
+  var exists = await RNFS.exists(RNFS.DocumentDirectoryPath + '/photoTagger6.realm');
   realm = await Realm.open({
-      path: RNFS.DocumentDirectoryPath + '/photoTagger3.realm',
+      path: RNFS.DocumentDirectoryPath + '/photoTagger6.realm',
       schema: [Tag, TagProp, Image],
   });
-    RNFS.exists(RNFS.DocumentDirectoryPath + '/photoTagger3.realm').then(exists => {
-        if(!exists) {
-          createDB(realm);
-        }
-    });
-    return realm;
+  if(!exists) {
+    createDB(realm);
+  }
+  return realm;
 }
 
 export function createDB(realm) {
@@ -88,7 +86,7 @@ export function createDB(realm) {
         for (let i = 0; i < scholar.properties.length; i++) {
           scholarRealm.props.push({
             prop: scholar.properties[i].displayName,
-            defaultValue: ''
+            tagId: scholar.about.id
           });
         }
         let personalRealm = realm.create('Tag', {
@@ -100,7 +98,7 @@ export function createDB(realm) {
         for (let i = 0; i < personal.properties.length; i++) {
           personalRealm.props.push({
             prop: personal.properties[i].displayName,
-            defaultValue: ''
+            tagId: personal.about.id
           });
         }
         let globalRealm = realm.create('Tag', {
@@ -112,7 +110,7 @@ export function createDB(realm) {
         for (let i = 0; i < globaltags.properties.length; i++) {
           globalRealm.props.push({
             prop: globaltags.properties[i].displayName,
-            defaultValue: ''
+            tagId: globaltags.about.id
           });
         }
       });

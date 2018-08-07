@@ -21,12 +21,12 @@ import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
 import RNFS from 'react-native-fs';
 import { YellowBox } from 'react-native'
 //YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated']);
-import { queryCars, openDB } from '../databases/schemas';
+import { realm, openDB } from '../databases/schemas';
 import Header from './Header';
 export default class StartGallery extends Component {
   state ={
     avatarSource: null,
-    projects: []
+    images: []
   }
 
   loadProjects() {
@@ -62,26 +62,32 @@ export default class StartGallery extends Component {
         console.log('User tapped custom button: ', response.customButton);
       }
       else {
-        let source = { uri: response.uri };
-
-        // You can also display the image using data:
-        // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-
-        this.setState({
-          avatarSource: source
+        let scholarProps = realm.objects('TagProp').filtered('tagId = "scholarTags-v0.1"');
+        //console.warn(response.fileName);
+        //console.warn(response.uri);
+        //console.warn(response);
+        realm.write(() => {
+          for (pair of scholarProps) {
+            realm.create('Image', {id: response.uri, prop: pair.prop, value: pair.defaultValue}, true);
+          }
         });
       }
     });
   }
   componentDidMount() {
-    //this.loadProjects();
-    openDB();
+    openDB().then(myrealm => {
+      //get images in App
+      let images = myrealm.objects('Image').filtered('TRUEPREDICATE DISTINCT(id)');
+      let ids = [];
+      for (image of images) {
+        ids.push(image.id);
+      }
+      this.setState({
+        images: ids
+      });
+    });
   }
   render() {
-    var images = ['1155F9B1-1ADF-41AD-A31C-2611B5BC782A.jpg'];
-    for (var i = 0; i < 30; i++) {
-      images.push('A18DBE0A-96D7-47A0-B06A-008150FB27D0.jpg');
-    }
     return (
       <View style={styles.container}>
         <Header title='PhotoTagger' navigation={this.props.navigation}/>
@@ -103,14 +109,14 @@ export default class StartGallery extends Component {
         <FlatList
           numColumns={3}
           columnWrapperStyle={styles.galleryColumn}
-          data={images}
+          data={this.state.images}
           renderItem={({ item }) =>
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('SinglePhoto')}
             >
               <Image
                 style={styles.photoItem}
-                source={{uri: 'file://' + RNFS.DocumentDirectoryPath + '/images/' + item, scale:1}}
+                source={{uri: item , scale:1}}
               />
             </TouchableOpacity>}
           keyExtractor={(item, index) => index}
