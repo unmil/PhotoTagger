@@ -40,22 +40,31 @@ const TagProp = {
   primaryKey: 'prop',
   properties: {
     prop: 'string',
-    defaultValue: 'string',
+    defaultValue: {type: 'string', default: ''},
     tags: {type: 'linkingObjects', objectType: 'Tag', property: 'props'}
   }
 }
-var realm = null;
+
+const Image = {
+  name: 'Image',
+  primaryKey: 'id',
+  properties: {
+    id: 'string',
+    prop: 'string',
+    value: {type: 'string', default: ''}
+  }
+}
+
+export var realm = null;
 
 export async function openDB() {
-    realm = await Realm.open({
-        path: RNFS.DocumentDirectoryPath + '/photoTagger2.realm',
-        schema: [Tag, TagProp],
-    });
-    RNFS.exists(RNFS.DocumentDirectoryPath + '/photoTagger2.realm').then(exists => {
+  realm = await Realm.open({
+      path: RNFS.DocumentDirectoryPath + '/photoTagger3.realm',
+      schema: [Tag, TagProp, Image],
+  });
+    RNFS.exists(RNFS.DocumentDirectoryPath + '/photoTagger3.realm').then(exists => {
         if(!exists) {
           createDB(realm);
-        } else {
-          console.log('file already exist');
         }
     });
     return realm;

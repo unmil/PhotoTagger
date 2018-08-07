@@ -14,17 +14,20 @@ import ImagePicker from 'react-native-image-picker';
 import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
 import { YellowBox } from 'react-native'
 //YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated']);
-import { queryCars } from '../databases/schemas';
+import { realm } from '../databases/schemas';
 import Header from './Header';
 
 export default class EditPreperty extends Component {
   state = {
     text: this.props.navigation.state.params.pair.defaultValue
   }
-  componentDidMount() {
-    //this.loadProjects();
-    //this.showImagePicker();
+  updateProperty() {
+    realm.write(() => {
+      realm.create('TagProp', {prop: this.props.navigation.state.params.pair.prop, defaultValue: this.state.text}, true);
+    });
+    this.props.navigation.goBack();
   }
+
   render() {
     const { params } = this.props.navigation.state;
     return (
@@ -55,7 +58,7 @@ export default class EditPreperty extends Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.addUserBtn, { backgroundColor: 'green' }]}
-            onPress={() => {this.props.navigation.goBack()}}
+            onPress={() => this.updateProperty()}
           >
             <Text style={styles.loginBtnText}> DONE </Text>
           </TouchableOpacity>
